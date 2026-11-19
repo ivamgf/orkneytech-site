@@ -1,0 +1,6 @@
+.next
+out
+dist
+prototype
+node_modules
+package-lock.json

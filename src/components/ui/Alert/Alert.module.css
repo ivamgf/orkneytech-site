@@ -1,0 +1,33 @@
+.alert {
+  border: 2px solid;
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.alert p:last-child,
+.alert ul:last-child {
+  margin-bottom: 0;
+}
+
+.title {
+  font-size: var(--step-1);
+  color: inherit;
+}
+
+.danger {
+  border-color: var(--color-danger);
+}
+
+.danger .title {
+  color: var(--color-danger);
+}
+
+.success {
+  border-color: var(--color-success);
+  font-weight: var(--weight-semibold);
+}
+
+.info {
+  border-color: var(--color-info);
+}

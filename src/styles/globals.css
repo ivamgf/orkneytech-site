@@ -1,0 +1,165 @@
+/* Base global. Tokens em tokens.css; estilos de componente em *.module.css. */
+
+:root {
+  /* next/font expõe a família como variável; tokens.css mantém o fallback. */
+  --font-sans: var(--font-open-sans), system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display:
+    var(--font-open-sans), system-ui, sans-serif; /* trocar por Regave quando houver o .woff2 licenciado */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+html {
+  font-size: var(--a11y-font, 100%);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font: var(--weight-regular) var(--step-0) / var(--leading-body) var(--font-sans);
+  overflow-x: clip;
+  zoom: var(--a11y-zoom, 1);
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--color-link);
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  text-wrap: balance;
+  margin: 0 0 var(--space-4);
+}
+
+h1 {
+  font-size: clamp(2rem, 1.4rem + 2.6vw, 3.25rem);
+}
+
+h2 {
+  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.2rem);
+  color: var(--color-primary);
+}
+
+h3 {
+  font-size: var(--step-1);
+}
+
+p {
+  margin: 0 0 var(--space-4);
+  max-width: var(--measure);
+}
+
+main:focus,
+h1[tabindex='-1']:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+main h1[tabindex='-1']:focus-visible {
+  box-shadow: var(--focus-ring);
+}
+
+.wrap {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: max(5vw, var(--space-4));
+}
+
+.band {
+  padding-block: clamp(var(--space-12), 6vw, var(--space-24));
+}
+
+.band--mist {
+  --color-link: var(--color-link-on-mist);
+  background: var(--color-surface-brand);
+}
+
+.section-head {
+  max-width: 46rem;
+  margin-bottom: var(--space-8);
+}
+
+.lead {
+  font-size: var(--step-1);
+  color: var(--color-fg-muted);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+}
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-12);
+  align-items: center;
+}
+
+.split--top {
+  align-items: start;
+}
+
+@media (max-width: 48em) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+}
+
+.prose {
+  max-width: var(--measure);
+}
+
+.prose h2 {
+  margin-top: var(--space-12);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Alto contraste: ajustes que os tokens sozinhos não cobrem */
+:root[data-contrast='high'] a {
+  text-decoration: underline;
+}
+
+:root[data-contrast='high'] img[data-brand-mark] {
+  background: #fff;
+  border-radius: var(--radius-md);
+}
+
+/* VLibras oculto pela ferramenta de acessibilidade */
+:root[data-vlibras='off'] [vw] {
+  display: none !important;
+}

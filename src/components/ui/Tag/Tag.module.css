@@ -1,0 +1,16 @@
+.tag {
+  display: inline-block;
+  align-self: flex-start;
+  background: var(--color-surface-brand);
+  color: var(--color-primary);
+  font-weight: var(--weight-bold);
+  font-size: 0.875rem;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  margin-bottom: var(--space-3);
+}
+
+:global(:root[data-contrast='high']) .tag {
+  border: 1px solid var(--color-fg);
+  color: var(--color-fg);
+}

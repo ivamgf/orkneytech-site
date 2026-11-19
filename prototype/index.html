@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orkneytech · Protótipo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<style>
+/* VOICE: técnico, confiante, claro — laboratório que entrega software.
+   IDEA: a prancha da identidade Orkneytech — faixa azul ondulada sobre névoa.
+   PICTURE: a esfera em treliça de losangos, grande, sobre o padrão de losangos.
+   COLOUR and TYPE: navy dominante, céu de apoio, laranja como acento de ação; Open Sans (Regave nos títulos no site final).
+   LAYOUT: cabeçalho fixo, banda ondulada no topo de cada página, seções em faixas de largura total. */
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--color-bg);color:var(--color-fg);font:var(--weight-regular) var(--step-0)/var(--leading-body) var(--font-sans);overflow-x:clip}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--color-link);text-underline-offset:.2em}
+a:hover{text-decoration-thickness:2px}
+h1,h2,h3{font-family:var(--font-display);font-weight:var(--weight-bold);line-height:var(--leading-tight);text-wrap:balance;margin:0 0 var(--space-4)}
+h1{font-size:clamp(2rem,1.4rem + 2.6vw,3.25rem)}
+h2{font-size:clamp(1.5rem,1.2rem + 1.2vw,2.2rem);color:var(--color-primary)}
+h3{font-size:var(--step-1)}
+p{margin:0 0 var(--space-4);max-width:var(--measure)}
+.wrap{max-width:var(--container);margin-inline:auto;padding-inline:max(5vw,var(--space-4))}
+.band{padding-block:clamp(var(--space-12),6vw,var(--space-24))}
+.band--mist{background:var(--color-surface-brand)}
+.skip{position:absolute;left:var(--space-4);top:-100px;z-index:100;background:var(--color-primary);color:var(--color-on-primary);padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);font-weight:700}
+.skip:focus{top:var(--space-2)}
+.proto{background:#1a1a1a;color:#fff;font-size:.875rem;padding:var(--space-2) 0}
+.proto .wrap{display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-6);align-items:center}
+.proto a{color:#9fdcf5}
+/* header */
+.hdr{position:sticky;top:0;z-index:50;background:var(--color-bg);border-bottom:1px solid color-mix(in srgb,var(--color-border) 40%,transparent);height:var(--header-height)}
+.hdr .wrap{display:flex;align-items:center;gap:var(--space-4);height:100%}
+.brand{display:flex;align-items:center;gap:var(--space-2);text-decoration:none;color:var(--color-primary);font-weight:700;font-size:var(--step-1);min-height:var(--target-comfort)}
+.brand img{width:40px}
+.nav{margin-inline-start:auto}
+.nav ul{list-style:none;margin:0;padding:0;display:flex;gap:var(--space-1)}
+.nav a{display:flex;align-items:center;min-height:var(--target-comfort);padding:0 var(--space-3);border-radius:var(--radius-md);color:var(--color-fg);text-decoration:none;font-weight:600}
+.nav a:hover{background:var(--color-surface)}
+.nav a[aria-current=page]{color:var(--color-primary);box-shadow:inset 0 -3px 0 var(--color-primary)}
+.menu-btn{display:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:var(--target-comfort);padding:0 var(--space-6);border-radius:var(--radius-pill);border:2px solid transparent;font:700 var(--step-0)/1 var(--font-sans);text-decoration:none;cursor:pointer;transition:transform var(--duration-fast) var(--ease-out)}
+.btn:hover{transform:translateY(-1px)}
+.btn--accent{background:var(--color-accent);color:var(--color-on-accent)}
+.btn--primary{background:var(--color-primary);color:var(--color-on-primary)}
+.btn--ghost{background:transparent;color:var(--color-primary);border-color:currentColor}
+@media (max-width:60em){
+  .menu-btn{display:inline-flex;margin-inline-start:auto;background:none;color:var(--color-fg);border:2px solid var(--color-border);border-radius:var(--radius-md);min-height:var(--target-comfort);padding:0 var(--space-4);font:600 1rem var(--font-sans);align-items:center;gap:var(--space-2);cursor:pointer}
+  .nav{position:absolute;inset:var(--header-height) 0 auto;background:var(--color-bg);border-bottom:1px solid var(--color-border);display:none;margin:0}
+  .nav.open{display:block}
+  .nav ul{flex-direction:column;padding:var(--space-4) max(5vw,var(--space-4))}
+  .hdr .cta{display:none}
+}
+/* hero / banda ondulada */
+.hero{background:var(--color-header);color:#fff;position:relative;padding-top:clamp(var(--space-12),6vw,var(--space-16));overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M28 4 52 28 28 52 4 28Z' fill='none' stroke='%23ffffff' stroke-opacity='.10' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E");pointer-events:none}
+.hero .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:var(--space-8);align-items:center;padding-bottom:var(--space-16)}
+.hero h1{color:#fff}
+.hero p{font-size:var(--step-1);color:#fff}
+.hero .eyebrow{font-weight:600;margin-bottom:var(--space-2)}
+.hero .actions{display:flex;flex-wrap:wrap;gap:var(--space-3);margin-top:var(--space-6)}
+.hero .btn--ghost{color:#fff}
+.orb{justify-self:center;width:min(100%,360px);filter:drop-shadow(0 24px 40px rgb(0 20 60 / .35));animation:float 9s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-10px)}}
+.hero--slim .wrap{grid-template-columns:1fr;padding-bottom:var(--space-12)}
+.wave{display:block;position:relative;width:100%;height:clamp(40px,7vw,96px);margin-bottom:-2px;color:var(--color-bg)}
+.hero + .band--mist{margin-top:0}
+/* grids & cards */
+.grid{display:grid;gap:var(--space-6);grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr))}
+.card{background:var(--color-bg);border:1px solid color-mix(in srgb,var(--color-border) 45%,transparent);border-radius:var(--radius-lg);padding:var(--space-8) var(--space-6);box-shadow:var(--shadow-sm);display:flex;flex-direction:column}
+.card p{color:var(--color-fg-muted)}
+.card .more{margin-top:auto;font-weight:700}
+.card--lead{border:2px solid var(--color-primary)}
+.tag{display:inline-block;align-self:flex-start;background:var(--color-surface-brand);color:var(--color-primary);font-weight:700;font-size:.875rem;padding:var(--space-1) var(--space-3);border-radius:var(--radius-pill);margin-bottom:var(--space-3)}
+.ico{width:48px;height:48px;margin-bottom:var(--space-4);color:var(--color-primary)}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--space-12);align-items:center}
+.checks{list-style:none;padding:0;margin:0 0 var(--space-6);display:grid;gap:var(--space-3)}
+.checks li{padding-inline-start:var(--space-8);position:relative}
+.checks li::before{content:"";position:absolute;left:0;top:.35em;width:1.1em;height:1.1em;background:var(--color-primary);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.section-head{max-width:46rem;margin-bottom:var(--space-8)}
+.lead{font-size:var(--step-1);color:var(--color-fg-muted)}
+.cta-band{background:var(--color-primary);color:var(--color-on-primary)}
+.cta-band h2{color:inherit}
+.cta-band .wrap{display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:center;justify-content:space-between}
+.product{display:grid;grid-template-columns:120px minmax(0,1fr);gap:var(--space-6);align-items:start}
+.product img{background:#fff;border-radius:var(--radius-md);padding:var(--space-3)}
+.kk{--k:#fe7d05}
+.kk .hero{background:#454d50}
+.kk .checks li::before{background:#fe7d05}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:var(--space-4);grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr))}
+.steps li{counter-increment:s;background:var(--color-bg);border-radius:var(--radius-lg);padding:var(--space-6);border-top:4px solid var(--color-primary)}
+.steps li::before{content:"Etapa " counter(s);display:block;font-weight:700;color:var(--color-primary);margin-bottom:var(--space-2)}
+/* form */
+.form{display:grid;gap:var(--space-6);max-width:40rem}
+.field{display:grid;gap:var(--space-2)}
+.field label,.legend{font-weight:700}
+.hint{color:var(--color-fg-muted);font-size:.9375rem;margin:0}
+.field input,.field select,.field textarea{font:inherit;font-size:1rem;color:var(--color-fg);background:var(--color-bg);border:2px solid var(--color-border);border-radius:var(--radius-md);padding:var(--space-3);min-height:var(--target-comfort);width:100%}
+.field textarea{min-height:9rem;resize:vertical}
+.field [aria-invalid=true]{border-color:var(--color-danger)}
+.err{color:var(--color-danger);font-weight:600;margin:0}
+.err::before{content:"⚠ ";}
+.check{display:flex;gap:var(--space-3);align-items:flex-start}
+.check input{width:1.5rem;height:1.5rem;margin-top:.15rem;accent-color:var(--color-primary)}
+.summary{margin-bottom:var(--space-6);border:2px solid var(--color-danger);border-radius:var(--radius-md);padding:var(--space-4) var(--space-6)}
+.summary h2{color:var(--color-danger);font-size:var(--step-1)}
+.ok{border:2px solid var(--color-success);border-radius:var(--radius-md);padding:var(--space-4) var(--space-6);font-weight:600}
+.hp{position:absolute;left:-9999px}
+.contact-aside{background:var(--color-surface-brand);border-radius:var(--radius-lg);padding:var(--space-8)}
+/* footer */
+.ftr{background:#0b1a2e;color:#dfe6f0;padding-block:var(--space-16) var(--space-8)}
+.ftr a{color:#9fdcf5}
+.ftr .cols{display:grid;gap:var(--space-8);grid-template-columns:repeat(auto-fit,minmax(min(100%,12rem),1fr))}
+.ftr h2{color:#fff;font-size:var(--step-0)}
+.ftr ul{list-style:none;padding:0;margin:0;display:grid;gap:var(--space-2)}
+.ftr small{display:block;margin-top:var(--space-12);border-top:1px solid #2a3d58;padding-top:var(--space-6)}
+/* wireframe */
+.wf{font-family:var(--font-sans)}
+.wf .tree{display:grid;gap:var(--space-4);grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr))}
+.wf .pg{border:2px dashed #8a93a6;border-radius:var(--radius-md);padding:var(--space-4);background:var(--color-surface)}
+.wf .pg h3{font-size:1rem}
+.wf .blk{background:#d5d9e2;color:#1a1a1a;border-radius:var(--radius-sm);padding:var(--space-1) var(--space-2);margin-top:var(--space-2);font-size:.875rem}
+.wf .blk.h{background:#454d50;color:#fff}
+@media (max-width:48em){
+  .hero .wrap,.split{grid-template-columns:1fr}
+  .orb{width:200px;order:-1}
+  .product{grid-template-columns:72px minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){.orb{animation:none}}
+:root[data-theme=dark] .product img{background:#fff}
+/* ferramentas de acessibilidade */
+html{font-size:var(--a11y-font,100%)}
+body{zoom:var(--a11y-zoom,1)}
+.a11y-btn{position:fixed;left:var(--space-4);bottom:var(--space-4);z-index:90;display:inline-flex;align-items:center;gap:var(--space-2);min-height:var(--target-comfort);padding:0 var(--space-4);border-radius:var(--radius-pill);border:2px solid var(--color-on-primary);background:var(--color-primary);color:var(--color-on-primary);font:700 1rem var(--font-sans);cursor:pointer;box-shadow:var(--shadow-md)}
+.a11y-btn svg{width:24px;height:24px}
+.a11y-panel{position:fixed;left:var(--space-4);bottom:calc(var(--space-4) + 3.5rem);z-index:91;width:min(22rem,calc(100vw - 2rem));max-height:calc(100vh - 6rem);overflow:auto;background:var(--color-bg);color:var(--color-fg);border:2px solid var(--color-primary);border-radius:var(--radius-lg);padding:var(--space-6);box-shadow:var(--shadow-md)}
+.a11y-panel h2{font-size:var(--step-1);margin-bottom:var(--space-4)}
+.a11y-group{border:0;padding:0;margin:0 0 var(--space-6)}
+.a11y-group legend{font-weight:700;margin-bottom:var(--space-2);padding:0}
+.a11y-row{display:flex;flex-wrap:wrap;gap:var(--space-2);align-items:center}
+.a11y-row button,.a11y-reset{min-height:var(--target-comfort);min-width:var(--target-comfort);padding:0 var(--space-3);border-radius:var(--radius-md);border:2px solid var(--color-primary);background:var(--color-bg);color:var(--color-primary);font:700 1rem var(--font-sans);cursor:pointer}
+.a11y-row button[aria-pressed=true]{background:var(--color-primary);color:var(--color-on-primary)}
+.a11y-row button:disabled{opacity:.45;cursor:not-allowed}
+.a11y-val{min-width:4.5ch;text-align:center;font-weight:700}
+.a11y-note{font-size:.9375rem;color:var(--color-fg-muted)}
+.a11y-close{position:absolute;top:var(--space-2);right:var(--space-2);min-width:var(--target-comfort);min-height:var(--target-comfort);border:0;background:none;color:var(--color-fg);font-size:1.5rem;cursor:pointer;border-radius:var(--radius-md)}
+:root[data-contrast=high] a{text-decoration:underline}
+:root[data-contrast=high] .card,:root[data-contrast=high] .steps li,:root[data-contrast=high] .contact-aside,:root[data-contrast=high] .hdr{border:2px solid #fff}
+:root[data-contrast=high] .hero,:root[data-contrast=high] .kk .hero,:root[data-contrast=high] .ftr,:root[data-contrast=high] .proto{background:#000;border-bottom:2px solid #fff}
+:root[data-contrast=high] .hero::before{display:none}
+:root[data-contrast=high] .ftr a,:root[data-contrast=high] .proto a,:root[data-contrast=high] .hero .btn--ghost,:root[data-contrast=high] .hero a{color:#ff0}
+:root[data-contrast=high] .wave{display:none}
+:root[data-contrast=high] .tag,:root[data-contrast=high] .wf .blk{background:#000;color:#fff;border:1px solid #fff}
+</style>
+</head>
+<body>
+<a class="skip" href="#main" id="skip">Pular para o conteúdo</a>
+<div class="proto" role="note"><div class="wrap"><strong>Protótipo navegável</strong><span>Textos provisórios, baseados em orkneytech-lab.com</span><a href="#mapa">Ver mapa do site (wireframe)</a></div></div>
+
+<header class="hdr">
+  <div class="wrap">
+    <a class="brand" href="#inicio"><img src="brand/orkneytech-esfera.png" alt="" width="40" height="40">Orkneytech</a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav class="nav" id="nav" aria-label="Principal">
+      <ul>
+        <li><a href="#inicio">Início</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#portfolio">Portfólio</a></li>
+        <li><a href="#pesquisa">P&amp;D</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn--accent cta" href="#contato">Fale com um consultor</a>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+<!-- INÍCIO -->
+<div data-page="inicio" data-title="Orkneytech · Consultoria em tecnologia e engenharia de software">
+  <section class="hero" aria-labelledby="h-inicio">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Orkneytech Lab · Consultoria, engenharia e pesquisa</p>
+        <h1 id="h-inicio" tabindex="-1">Transformamos ideias em soluções</h1>
+        <p>Consultoria em tecnologia apoiada por um laboratório de pesquisa em engenharia de software. Ajudamos sua empresa a decidir melhor, construir com qualidade e evoluir com segurança.</p>
+        <div class="actions"><a class="btn btn--accent" href="#contato">Agendar um diagnóstico</a><a class="btn btn--ghost" href="#servicos">Conhecer os serviços</a></div>
+      </div>
+      <img class="orb" src="brand/orkneytech-esfera.png" alt="" width="176" height="176">
+    </div>
+    <svg class="wave" viewBox="0 0 1440 96" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path fill="currentColor" d="M0 96V60C240 40 520 20 760 40s480 46 680 10v46Z"/></svg>
+  </section>
+
+  <section class="band" aria-labelledby="h-serv-home">
+    <div class="wrap">
+      <div class="section-head"><h2 id="h-serv-home">O que fazemos</h2><p class="lead">Da estratégia ao código em produção, com método e rigor de pesquisa.</p></div>
+      <div class="grid" id="svc-cards"></div>
+    </div>
+  </section>
+
+  <section class="band band--mist" aria-labelledby="h-port-home">
+    <div class="wrap">
+      <div class="section-head"><h2 id="h-port-home">Softwares que nascem no laboratório</h2><p class="lead">A família Konektron leva para o dia a dia das equipes o que pesquisamos em engenharia de software e dados.</p></div>
+      <div class="grid" id="prod-cards"></div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="h-pd-home">
+    <div class="wrap split">
+      <div>
+        <h2 id="h-pd-home">Pesquisa que vira prática</h2>
+        <p>Mantemos linhas de pesquisa aplicada em engenharia de software, dados e IA, acessibilidade em ambientes imersivos e computação quântica. O que aprendemos no laboratório chega aos projetos dos clientes.</p>
+        <a class="btn btn--ghost" href="#pesquisa">Ver linhas de pesquisa</a>
+      </div>
+      <ul class="checks">
+        <li>Engenharia de software baseada em evidências</li>
+        <li>Engenharia de dados com CRISP-DM e IA aplicada</li>
+        <li>Acessibilidade em realidade virtual</li>
+        <li>Computação quântica e software quântico</li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<!-- SOBRE -->
+<div data-page="sobre" data-title="Sobre · Orkneytech" hidden>
+  <section class="hero hero--slim"><div class="wrap"><h1 tabindex="-1">Sobre a Orkneytech</h1><p>Um laboratório de pesquisa em engenharia de software e novas tecnologias que também atende empresas.</p></div><svg class="wave" viewBox="0 0 1440 96" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path fill="currentColor" d="M0 96V60C240 40 520 20 760 40s480 46 680 10v46Z"/></svg></section>
+  <section class="band"><div class="wrap split">
+    <div>
+      <h2>Quem somos</h2>
+      <p>A Orkneytech Lab reúne consultoria, desenvolvimento e pesquisa aplicada para transformar ideias complexas em software confiável, acessível e escalável.</p>
+      <p>Trabalhamos lado a lado com as equipes dos clientes: entendemos o problema, propomos a arquitetura certa e entregamos com processos claros e documentação completa.</p>
+    </div>
+    <img src="brand/orkneytech-logo.png" alt="Logotipo da Orkneytech: esfera azul em treliça de losangos sobre o nome Orkneytech" width="316" height="242" style="justify-self:center">
+  </div></section>
+  <section class="band band--mist"><div class="wrap">
+    <h2>Nossos valores</h2>
+    <div class="grid">
+      <div class="card"><h3>Rigor técnico</h3><p>Decisões apoiadas em evidências, métricas e boas práticas de engenharia.</p></div>
+      <div class="card"><h3>Acessibilidade</h3><p>Software que todas as pessoas conseguem usar, do primeiro protótipo à entrega.</p></div>
+      <div class="card"><h3>Transparência</h3><p>Processos visíveis, documentação viva e comunicação direta com o cliente.</p></div>
+      <div class="card"><h3>Aprendizado contínuo</h3><p>A pesquisa do laboratório alimenta e melhora cada projeto.</p></div>
+    </div>
+  </div></section>
+</div>
+
+<!-- SERVIÇOS -->
+<div data-page="servicos" data-title="Serviços · Orkneytech" hidden>
+  <section class="hero hero--slim"><div class="wrap"><h1 tabindex="-1">Serviços</h1><p>Consultoria em tecnologia como ponto de partida, com engenharia e fábrica de software para executar.</p></div><svg class="wave" viewBox="0 0 1440 96" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path fill="currentColor" d="M0 96V60C240 40 520 20 760 40s480 46 680 10v46Z"/></svg></section>
+  <div id="svc-detail"></div>
+  <section class="band band--mist"><div class="wrap">
+    <h2>Como trabalhamos</h2>
+    <ol class="steps">
+      <li><h3>Diagnóstico</h3><p>Entendemos o negócio, os sistemas atuais e as restrições.</p></li>
+      <li><h3>Proposta</h3><p>Arquitetura, escopo, prazos e riscos documentados.</p></li>
+      <li><h3>Execução</h3><p>Ciclos curtos com Scrum e entregas demonstráveis.</p></li>
+      <li><h3>Evolução</h3><p>Medição, suporte e melhoria contínua.</p></li>
+    </ol>
+  </div></section>
+</div>
+
+<!-- PORTFÓLIO -->
+<div data-page="portfolio" data-title="Portfólio · Orkneytech" hidden>
+  <section class="hero hero--slim"><div class="wrap"><h1 tabindex="-1">Portfólio de softwares</h1><p>Produtos próprios, criados e validados no laboratório.</p></div><svg class="wave" viewBox="0 0 1440 96" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path fill="currentColor" d="M0 96V60C240 40 520 20 760 40s480 46 680 10v46Z"/></svg></section>
+  <section class="band"><div class="wrap" style="display:grid;gap:var(--space-8)" id="prod-list"></div></section>
+</div>
+
+<!-- KONEKTRON -->
+<div data-page="konektron" data-title="Konektron · Orkneytech" class="kk" hidden>
+  <section class="hero"><div class="wrap">
+    <div>
+      <p class="eyebrow"><a href="#portfolio" style="color:#fff">Portfólio</a> / Konektron</p>
+      <h1 tabindex="-1">Konektron: a engenharia de software do seu time em um só lugar</h1>
+      <p>Requisitos, dados, Scrum e documentação conectados, do primeiro levantamento à entrega.</p>
+      <div class="actions"><a class="btn btn--accent" href="#contato">Solicitar demonstração</a></div>
+    </div>
+    <img class="orb" src="brand/konektron-simbolo.png" alt="" width="185" height="199" style="width:min(100%,240px)">
+  </div><svg class="wave" viewBox="0 0 1440 96" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path fill="currentColor" d="M0 96V60C240 40 520 20 760 40s480 46 680 10v46Z"/></svg></section>
+  <section class="band"><div class="wrap">
+    <div class="section-head"><h2>Recursos</h2></div>
+    <div class="grid">
+      <div class="card"><h3>Engenharia de requisitos</h3><p>Levantamento, especificação e rastreabilidade de requisitos.</p></div>
+      <div class="card"><h3>Engenharia de dados</h3><p>Projetos de dados guiados pelo CRISP-DM, do entendimento do negócio à implantação.</p></div>
+      <div class="card"><h3>Modelagem de dados</h3><p>Modelos conceituais e lógicos integrados ao projeto.</p></div>
+      <div class="card"><h3>Scrum e Kanban</h3><p>Backlog, sprints e quadro Kanban no mesmo lugar dos requisitos.</p></div>
+      <div class="card"><h3>Documentação automática</h3><p>Gera documentos de especificação e de projeto a partir do que o time já registrou.</p></div>
+    </div>
+  </div></section>
+  <section class="band band--mist"><div class="wrap split">
+    <div><h2>A família Konektron</h2><p><strong>Konektron Research</strong> leva a mesma organização para a gestão de pesquisas científicas. <strong>Konektron-SE</strong> amplia o foco em engenharia de software.</p><a class="btn btn--ghost" href="#portfolio">Ver todo o portfólio</a></div>
+    <img src="brand/konektron-logo.png" alt="Logotipo do Konektron: blocos laranja e azul encaixados sobre o nome Konektron" width="388" height="262" style="justify-self:center">
+  </div></section>
+</div>
+
+<!-- P&D -->
+<div data-page="pesquisa" data-title="Pesquisa e Desenvolvimento · Orkneytech" hidden>
+  <section class="hero hero--slim"><div class="wrap"><h1 tabindex="-1">Pesquisa e Desenvolvimento</h1><p>O laboratório que sustenta nossos serviços e produtos.</p></div><svg class="wave" viewBox="0 0 1440 96" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path fill="currentColor" d="M0 96V60C240 40 520 20 760 40s480 46 680 10v46Z"/></svg></section>
+  <section class="band"><div class="wrap">
+    <div class="section-head"><h2>Linhas de pesquisa</h2></div>
+    <div class="grid">
+      <div class="card"><span class="tag">Linha 1</span><h3>Engenharia de software</h3><p>Processos, requisitos, arquitetura e qualidade, com estudos aplicados em projetos reais.</p></div>
+      <div class="card"><span class="tag">Linha 2</span><h3>Dados e IA aplicada</h3><p>Engenharia e análise de dados com CRISP-DM e modelos de IA voltados a problemas de negócio.</p></div>
+      <div class="card"><span class="tag">Linha 3</span><h3>Acessibilidade imersiva</h3><p>Recursos de acessibilidade para realidade virtual e ambientes 3D.</p></div>
+      <div class="card"><span class="tag">Linha 4</span><h3>Computação quântica</h3><p>Algoritmos quânticos e híbridos para otimização e simulação, engenharia de software quântico e preparação das empresas para a criptografia pós-quântica.</p></div>
+    </div>
+  </div></section>
+  <section class="band band--mist"><div class="wrap">
+    <h2>Projeto em destaque: Attila VR Accessibility</h2>
+    <p>Adiciona recursos de acessibilidade a objetos 3D em realidade virtual, como ajuste de brilho, inversão de cores e realce de bordas.</p>
+    <p>Quer pesquisar com a gente ou levar uma linha de pesquisa para a sua empresa? <a href="#contato">Fale com o laboratório</a>.</p>
+  </div></section>
+</div>
+
+<!-- CONTATO -->
+<div data-page="contato" data-title="Contato · Orkneytech" hidden>
+  <section class="hero hero--slim"><div class="wrap"><h1 tabindex="-1">Fale com a Orkneytech</h1><p>Conte o seu desafio. Respondemos em até dois dias úteis.</p></div><svg class="wave" viewBox="0 0 1440 96" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path fill="currentColor" d="M0 96V60C240 40 520 20 760 40s480 46 680 10v46Z"/></svg></section>
+  <section class="band"><div class="wrap split" style="align-items:start">
+    <div>
+      <div id="form-msg" role="status" aria-live="polite"></div>
+      <form class="form" id="contact" novalidate>
+        <p class="hint">Todos os campos são obrigatórios, exceto quando indicado.</p>
+        <div class="field"><label for="f-nome">Nome</label><input id="f-nome" name="nome" autocomplete="name" required></div>
+        <div class="field"><label for="f-email">E-mail</label><p class="hint" id="f-email-hint">Exemplo: nome@empresa.com.br</p><input id="f-email" name="email" type="email" autocomplete="email" aria-describedby="f-email-hint" required></div>
+        <div class="field"><label for="f-empresa">Empresa (opcional)</label><input id="f-empresa" name="empresa" autocomplete="organization"></div>
+        <div class="field"><label for="f-assunto">Assunto</label>
+          <select id="f-assunto" name="assunto" required>
+            <option value="">Selecione</option><option>Consultoria em tecnologia</option><option>Engenharia de software e dados</option><option>Fábrica de software</option><option>Konektron, Konektron Research ou Konektron-SE</option><option>Pesquisa e desenvolvimento</option><option>Outro assunto</option>
+          </select></div>
+        <div class="field"><label for="f-msg">Mensagem</label><textarea id="f-msg" name="mensagem" required></textarea></div>
+        <div class="hp" aria-hidden="true"><label for="f-site">Não preencha este campo</label><input id="f-site" name="site" tabindex="-1" autocomplete="off"></div>
+        <div class="field"><div class="check"><input type="checkbox" id="f-lgpd" name="lgpd" required><label for="f-lgpd">Concordo que a Orkneytech use estes dados para responder ao meu contato, conforme a <a href="#contato">Política de Privacidade</a>.</label></div></div>
+        <div><button class="btn btn--primary" type="submit">Enviar mensagem</button></div>
+      </form>
+    </div>
+    <aside class="contact-aside" aria-labelledby="h-outros">
+      <h2 id="h-outros">Outros canais</h2>
+      <p><strong>E-mail</strong><br><a href="mailto:orkneytech-lab@orkneytech-lab.com">orkneytech-lab@orkneytech-lab.com</a></p>
+      <p><strong>Suporte aos produtos</strong><br>Clientes do Konektron podem abrir chamados pelo mesmo e-mail, informando o produto no assunto.</p>
+    </aside>
+  </div></section>
+</div>
+
+<!-- MAPA / WIREFRAME -->
+<div data-page="mapa" data-title="Mapa do site (wireframe) · Orkneytech" hidden class="wf">
+  <section class="band"><div class="wrap">
+    <h1 tabindex="-1">Mapa do site e wireframe</h1>
+    <p class="lead">Estrutura de cada página: landmarks, hierarquia de títulos (um h1 por página) e chamadas para ação. Todas as páginas têm o mesmo cabeçalho, com link para pular ao conteúdo e navegação principal, e o mesmo rodapé.</p>
+    <div class="tree" id="wf"></div>
+  </div></section>
+</div>
+
+</main>
+
+<footer class="ftr">
+  <div class="wrap">
+    <div class="cols">
+      <div><img src="brand/orkneytech-logo-branco.png" alt="Orkneytech" width="160" height="120" style="width:160px"><p>Laboratório de pesquisas em engenharia de software e novas tecnologias.</p></div>
+      <nav aria-label="Serviços"><h2>Serviços</h2><ul><li><a href="#servicos">Consultoria em tecnologia</a></li><li><a href="#servicos">Engenharia de software e dados</a></li><li><a href="#servicos">Fábrica de software</a></li></ul></nav>
+      <nav aria-label="Portfólio e pesquisa"><h2>Portfólio</h2><ul><li><a href="#konektron">Konektron</a></li><li><a href="#portfolio">Konektron Research</a></li><li><a href="#portfolio">Konektron-SE</a></li><li><a href="#pesquisa">Pesquisa e desenvolvimento</a></li></ul></nav>
+      <div><h2>Contato</h2><ul><li><a href="#contato">Formulário de contato</a></li><li>orkneytech-lab@orkneytech-lab.com</li><li><a href="#contato">Política de privacidade</a></li><li><a href="#contato">Declaração de acessibilidade</a></li></ul></div>
+    </div>
+    <small>© 2026 Orkneytech Lab. Todos os direitos reservados.</small>
+  </div>
+</footer>
+
+<button class="a11y-btn" id="a11y-btn" type="button" aria-expanded="false" aria-controls="a11y-panel">
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="4" r="2" fill="currentColor"/><path d="M4 8.5 12 10l8-1.5M12 10v5m0 0-3.5 6.5M12 15l3.5 6.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  Acessibilidade
+</button>
+<section class="a11y-panel" id="a11y-panel" aria-labelledby="a11y-title" hidden>
+  <button class="a11y-close" type="button" id="a11y-close" aria-label="Fechar ferramentas de acessibilidade">×</button>
+  <h2 id="a11y-title">Ferramentas de acessibilidade</h2>
+  <fieldset class="a11y-group">
+    <legend>Tamanho do texto</legend>
+    <div class="a11y-row">
+      <button type="button" data-font="-1" aria-label="Diminuir texto">A−</button>
+      <span class="a11y-val" id="font-val">100%</span>
+      <button type="button" data-font="1" aria-label="Aumentar texto">A+</button>
+    </div>
+  </fieldset>
+  <fieldset class="a11y-group">
+    <legend>Zoom da página</legend>
+    <div class="a11y-row">
+      <button type="button" data-zoom="-1" aria-label="Diminuir zoom">−</button>
+      <span class="a11y-val" id="zoom-val">100%</span>
+      <button type="button" data-zoom="1" aria-label="Aumentar zoom">+</button>
+    </div>
+  </fieldset>
+  <fieldset class="a11y-group">
+    <legend>Contraste</legend>
+    <div class="a11y-row"><button type="button" id="contrast" aria-pressed="false">Alto contraste</button></div>
+  </fieldset>
+  <fieldset class="a11y-group">
+    <legend>Libras</legend>
+    <div class="a11y-row"><button type="button" id="vlibras" aria-pressed="false">Mostrar VLibras</button></div>
+    <p class="a11y-note" id="vlibras-note">No site final, o tradutor oficial VLibras (gov.br) abre no canto da tela. O protótipo não consegue carregá-lo.</p>
+  </fieldset>
+  <button type="button" class="a11y-reset" id="a11y-reset">Restaurar padrão</button>
+  <p class="a11y-note">Suas escolhas ficam salvas neste navegador.</p>
+</section>
+<div role="status" aria-live="polite" class="hp" id="a11y-live"></div>
+
+<script>
+{
+const SERVICES=[
+ {id:'consultoria',lead:true,tag:'Serviço principal',t:'Consultoria em tecnologia',d:'Diagnóstico, arquitetura e estratégia para decisões técnicas mais seguras.',items:['Diagnóstico de sistemas, processos e maturidade técnica','Arquitetura de software e de dados, inclusive em nuvem','Roadmap tecnológico e priorização de investimentos','Avaliação de fornecedores, riscos e conformidade com a LGPD','Acessibilidade digital (WCAG) em produtos existentes']},
+ {id:'engenharia',t:'Engenharia de software e dados',d:'Times e processos para projetar, construir e evoluir sistemas sob medida.',items:['Engenharia e especificação de requisitos','Modelagem de dados e pipelines','Projetos de dados com CRISP-DM e IA aplicada','Produtos SaaS seguros, multi-cliente e escaláveis','Qualidade, testes automatizados e documentação']},
+ {id:'fabrica',t:'Fábrica de software',d:'Capacidade de entrega sob demanda, com processo definido e previsível.',items:['Squads alocadas por projeto ou por demanda contínua','Scrum e Kanban com entregas demonstráveis','Web, APIs e aplicações em nuvem','Sustentação e evolução de sistemas legados','Documentação de especificações e de projeto']}
+];
+const PRODUCTS=[
+ {id:'konektron',img:'konektron-simbolo.png',t:'Konektron',d:'Gestão de processos de engenharia de software: requisitos, engenharia de dados com CRISP-DM, modelagem de dados, Scrum, Kanban e geração de documentação.',href:'#konektron',cta:'Conhecer o Konektron'},
+ {id:'research',img:'konektron-simbolo.png',t:'Konektron Research',d:'Gestão de pesquisas científicas: projetos, etapas, equipes e produção acadêmica organizados em um só lugar.',href:'#contato',cta:'Solicitar acesso'},
+ {id:'se',img:'konektron-simbolo.png',t:'Konektron-SE',d:'Edição do Konektron dedicada à engenharia de software, com trilhas de requisitos, arquitetura e qualidade.',href:'#contato',cta:'Quero saber mais'}
+];
+const ICON='<svg class="ico" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M24 4 44 24 24 44 4 24Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><path d="M24 14 34 24 24 34 14 24Z" fill="currentColor" opacity=".35"/></svg>';
+const $=s=>document.querySelector(s);
+$('#svc-cards').innerHTML=SERVICES.map(s=>`<article class="card${s.lead?' card--lead':''}">${s.tag?`<span class="tag">${s.tag}</span>`:''}${ICON}<h3>${s.t}</h3><p>${s.d}</p><a class="more" href="#servicos">Saiba mais sobre ${s.t.toLowerCase()}</a></article>`).join('');
+$('#svc-detail').innerHTML=SERVICES.map((s,i)=>`<section class="band${i%2?' band--mist':''}" aria-labelledby="h-${s.id}"><div class="wrap split"><div>${s.tag?`<span class="tag">${s.tag}</span>`:''}<h2 id="h-${s.id}">${s.t}</h2><p class="lead">${s.d}</p><a class="btn btn--accent" href="#contato">Conversar sobre ${s.t.toLowerCase()}</a></div><ul class="checks">${s.items.map(x=>`<li>${x}</li>`).join('')}</ul></div></section>`).join('');
+$('#prod-cards').innerHTML=PRODUCTS.map(p=>`<article class="card"><img src="brand/${p.img}" alt="" width="48" height="52" style="width:48px;margin-bottom:var(--space-4)"><h3>${p.t}</h3><p>${p.d}</p><a class="more" href="${p.href}">${p.cta}<span class="sr"> – ${p.t}</span></a></article>`).join('');
+$('#prod-list').innerHTML=PRODUCTS.map(p=>`<article class="card product" aria-labelledby="p-${p.id}"><img src="brand/${p.img}" alt="" width="120" height="129"><div><h2 id="p-${p.id}">${p.t}</h2><p>${p.d}</p><a class="btn btn--ghost" href="${p.href}">${p.cta}</a></div></article>`).join('');
+document.querySelectorAll('.sr').forEach(e=>e.remove());
+
+const WF={'Início /':['h1 Transformamos ideias em soluções','CTA Agendar diagnóstico','h2 O que fazemos (3 cards)','h2 Softwares do laboratório (3 cards)','h2 Pesquisa que vira prática','Rodapé'],
+'Sobre /sobre':['h1 Sobre a Orkneytech','h2 Quem somos','h2 Nossos valores (4 cards)'],
+'Serviços /servicos':['h1 Serviços','h2 Consultoria em tecnologia','h2 Engenharia de software e dados','h2 Fábrica de software','h2 Como trabalhamos (4 etapas)'],
+'Portfólio /portfolio':['h1 Portfólio de softwares','h2 Konektron','h2 Konektron Research','h2 Konektron-SE'],
+'Konektron /portfolio/konektron':['Trilha: Portfólio / Konektron','h1 Konektron','CTA Solicitar demonstração','h2 Recursos (5 cards)','h2 A família Konektron'],
+'P&D /pesquisa':['h1 Pesquisa e Desenvolvimento','h2 Linhas de pesquisa (4, inclui computação quântica)','h2 Projeto em destaque'],
+'Contato /contato':['h1 Fale com a Orkneytech','Formulário (PHP + SQLite)','Resumo de erros + status','aside Outros canais'],
+'Global (todas as páginas)':['Botão Acessibilidade: texto, zoom, alto contraste, VLibras','Widget VLibras (gov.br)'],
+'Legais':['/privacidade','/acessibilidade (declaração)','/404']};
+$('#wf').innerHTML=Object.entries(WF).map(([k,v])=>`<div class="pg"><h3>${k}</h3>${v.map(b=>`<div class="blk${b.startsWith('h1')?' h':''}">${b}</div>`).join('')}</div>`).join('');
+
+const pages=[...document.querySelectorAll('[data-page]')];
+const links=[...document.querySelectorAll('.nav a')];
+const btn=$('.menu-btn'),nav=$('#nav');
+let first=true;
+function route(){
+  const id=location.hash.slice(1);
+  const page=pages.find(p=>p.dataset.page===id)||pages[0];
+  pages.forEach(p=>p.hidden=p!==page);
+  document.title=page.dataset.title;
+  const navId=page.dataset.page==='konektron'?'portfolio':page.dataset.page;
+  links.forEach(a=>a.getAttribute('href')==='#'+navId?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current'));
+  nav.classList.remove('open');btn.setAttribute('aria-expanded','false');
+  if(!first){window.scrollTo(0,0);page.querySelector('h1').focus();}
+  first=false;
+}
+addEventListener('hashchange',route);route();
+btn.addEventListener('click',()=>{const o=btn.getAttribute('aria-expanded')!=='true';btn.setAttribute('aria-expanded',String(o));nav.classList.toggle('open',o);});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&nav.classList.contains('open')){nav.classList.remove('open');btn.setAttribute('aria-expanded','false');btn.focus();}});
+$('#skip').addEventListener('click',e=>{e.preventDefault();$('#main').focus();});
+
+const form=$('#contact'),msg=$('#form-msg');
+const RULES=[['f-nome','Informe seu nome.'],['f-email','Informe um e-mail válido, como nome@empresa.com.br.'],['f-assunto','Selecione um assunto.'],['f-msg','Escreva sua mensagem.'],['f-lgpd','Marque a concordância com a Política de Privacidade.']];
+form.addEventListener('submit',e=>{
+  e.preventDefault();
+  form.querySelectorAll('.err').forEach(n=>n.remove());
+  const bad=[];
+  RULES.forEach(([id,text])=>{
+    const el=document.getElementById(id);
+    const ok=el.type==='checkbox'?el.checked:el.checkValidity()&&el.value.trim()!=='';
+    el.setAttribute('aria-invalid',String(!ok));
+    const base=(el.getAttribute('aria-describedby')||'').split(' ').filter(x=>x&&!x.endsWith('-err'));
+    if(!ok){const p=document.createElement('p');p.className='err';p.id=id+'-err';p.textContent=text;el.closest('.field').append(p);base.push(p.id);bad.push([id,text]);}
+    base.length?el.setAttribute('aria-describedby',base.join(' ')):el.removeAttribute('aria-describedby');
+  });
+  if(bad.length){
+    msg.innerHTML=`<div class="summary" tabindex="-1" id="sum"><h2>Corrija ${bad.length} ${bad.length>1?'campos':'campo'} para enviar</h2><ul>${bad.map(([id,t])=>`<li><a href="#${id}" data-f="${id}">${t}</a></li>`).join('')}</ul></div>`;
+    $('#sum').focus();
+    msg.querySelectorAll('[data-f]').forEach(a=>a.addEventListener('click',ev=>{ev.preventDefault();document.getElementById(a.dataset.f).focus();}));
+    return;
+  }
+  msg.innerHTML='<p class="ok">Simulação do protótipo: no site real, a mensagem será enviada para contato.php e gravada no banco. Nada foi enviado aqui.</p>';
+  form.reset();
+});
+
+/* ferramentas de acessibilidade */
+const FONT=[100,112.5,125,150,175,200],ZOOM=[100,125,150,175,200];
+const root=document.documentElement,live=$('#a11y-live');
+const store={get(){try{return JSON.parse(localStorage.getItem('a11y'))||{}}catch{return{}}},set(v){try{localStorage.setItem('a11y',JSON.stringify(v))}catch{}}};
+let st=Object.assign({font:0,zoom:0,contrast:false,vlibras:false},store.get());
+const panel=$('#a11y-panel'),opener=$('#a11y-btn');
+function apply(announce){
+  st.font=Math.max(0,Math.min(FONT.length-1,st.font));st.zoom=Math.max(0,Math.min(ZOOM.length-1,st.zoom));
+  root.style.setProperty('--a11y-font',FONT[st.font]+'%');
+  root.style.setProperty('--a11y-zoom',ZOOM[st.zoom]/100);
+  st.contrast?root.dataset.contrast='high':delete root.dataset.contrast;
+  $('#font-val').textContent=FONT[st.font]+'%';$('#zoom-val').textContent=ZOOM[st.zoom]+'%';
+  panel.querySelector('[data-font="-1"]').disabled=st.font===0;panel.querySelector('[data-font="1"]').disabled=st.font===FONT.length-1;
+  panel.querySelector('[data-zoom="-1"]').disabled=st.zoom===0;panel.querySelector('[data-zoom="1"]').disabled=st.zoom===ZOOM.length-1;
+  $('#contrast').setAttribute('aria-pressed',String(st.contrast));
+  $('#vlibras').setAttribute('aria-pressed',String(st.vlibras));
+  $('#vlibras').textContent=st.vlibras?'Ocultar VLibras':'Mostrar VLibras';
+  store.set(st);
+  if(announce)live.textContent=announce;
+}
+function toggle(open){panel.hidden=!open;opener.setAttribute('aria-expanded',String(open));if(open)$('#a11y-title').setAttribute('tabindex','-1'),$('#a11y-title').focus();else opener.focus();}
+opener.addEventListener('click',()=>toggle(panel.hidden));
+$('#a11y-close').addEventListener('click',()=>toggle(false));
+panel.addEventListener('keydown',e=>{if(e.key==='Escape'){e.stopPropagation();toggle(false);}});
+panel.querySelectorAll('[data-font]').forEach(b=>b.addEventListener('click',()=>{st.font+=+b.dataset.font;apply();live.textContent='Tamanho do texto: '+FONT[Math.max(0,Math.min(FONT.length-1,st.font))]+'%';}));
+panel.querySelectorAll('[data-zoom]').forEach(b=>b.addEventListener('click',()=>{st.zoom+=+b.dataset.zoom;apply();live.textContent='Zoom: '+ZOOM[Math.max(0,Math.min(ZOOM.length-1,st.zoom))]+'%';}));
+$('#contrast').addEventListener('click',()=>{st.contrast=!st.contrast;apply(st.contrast?'Alto contraste ativado':'Alto contraste desativado');});
+$('#vlibras').addEventListener('click',()=>{st.vlibras=!st.vlibras;apply(st.vlibras?'VLibras será exibido no site final':'VLibras oculto');});
+$('#a11y-reset').addEventListener('click',()=>{st={font:0,zoom:0,contrast:false,vlibras:false};apply('Configurações de acessibilidade restauradas');});
+apply();
+}
+</script>
+</body>
+</html>

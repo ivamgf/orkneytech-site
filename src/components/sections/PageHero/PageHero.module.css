@@ -1,0 +1,115 @@
+/* Texto branco sobre #00729C (5.4:1), #454D50 (8.6:1) e #074B9C no tema escuro (8.4:1). */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding-top: clamp(var(--space-12), 6vw, var(--space-16));
+  color: #fff;
+}
+
+.brand {
+  background: var(--color-header);
+}
+
+.konektron {
+  background: var(--konektron-graphite);
+}
+
+/* padrão de losangos da esfera, decorativo */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M28 4 52 28 28 52 4 28Z' fill='none' stroke='%23ffffff' stroke-opacity='.10' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.inner {
+  position: relative;
+  display: grid;
+  gap: var(--space-8);
+  align-items: center;
+  padding-bottom: var(--space-12);
+}
+
+.withImage {
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  padding-bottom: var(--space-16);
+}
+
+.hero h1 {
+  color: #fff;
+}
+
+.eyebrow {
+  margin-bottom: var(--space-2);
+  font-weight: var(--weight-semibold);
+}
+
+.eyebrow a {
+  color: #fff;
+}
+
+.lead {
+  font-size: var(--step-1);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.image {
+  justify-self: center;
+  width: min(100%, 360px);
+  height: auto;
+  filter: drop-shadow(0 24px 40px rgb(0 20 60 / 0.35));
+  animation: float 9s ease-in-out infinite;
+}
+
+@keyframes float {
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.wave {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: clamp(40px, 7vw, 96px);
+  margin-bottom: -2px;
+  color: var(--color-bg);
+}
+
+@media (max-width: 48em) {
+  .withImage {
+    grid-template-columns: 1fr;
+  }
+
+  .image {
+    order: -1;
+    width: 200px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image {
+    animation: none;
+  }
+}
+
+:global(:root[data-contrast='high']) .hero {
+  background: #000;
+  border-bottom: 2px solid #fff;
+}
+
+:global(:root[data-contrast='high']) .hero::before,
+:global(:root[data-contrast='high']) .wave {
+  display: none;
+}
+
+:global(:root[data-contrast='high']) .eyebrow a {
+  color: var(--color-link);
+}

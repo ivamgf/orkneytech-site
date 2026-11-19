@@ -1,0 +1,30 @@
+.form {
+  display: grid;
+  gap: var(--space-6);
+  max-width: 40rem;
+}
+
+.hint {
+  margin: 0;
+  color: var(--color-fg-muted);
+}
+
+.trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.aside {
+  --color-link: var(--color-link-on-mist);
+  padding: var(--space-8);
+  background: var(--color-surface-brand);
+  border-radius: var(--radius-lg);
+  overflow-wrap: anywhere;
+}
+
+:global(:root[data-contrast='high']) .aside {
+  border: 2px solid var(--color-fg);
+}

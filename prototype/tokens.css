@@ -1,0 +1,174 @@
+/* Orkneytech — design tokens (fonte única da verdade)
+ * Origem: Figma "Visual Identity Orkneytech" (páginas Colors, Typography, Konektron).
+ * Contrastes calculados pela fórmula WCAG 2.2. Ver docs/design-system.md.
+ */
+
+:root {
+  /* ---- Marca (valores originais do Figma) ---- */
+  --brand-sky: #008bbe;        /* Color 1 */
+  --brand-orange: #f18620;     /* Color 2 */
+  --brand-navy: #074b9c;       /* Color 3 */
+  --brand-black: #000000;      /* Color 4 */
+  --brand-mist: #dce1ef;       /* fundo das pranchas do Figma */
+
+  /* Konektron */
+  --konektron-sky: #019bcd;
+  --konektron-orange: #fe7d05;
+  --konektron-graphite: #454d50;
+
+  /* ---- Ajustes para texto (AA) ---- */
+  --brand-sky-text: #00729c;   /* 5.4:1 sobre #fff (o #008BBE dá só 3.86:1) */
+  --brand-orange-text: #b35a00;/* 4.8:1 sobre #fff (o #F18620 dá só 2.57:1) */
+
+  /* ---- Papéis semânticos — tema claro ---- */
+  --color-bg: #ffffff;
+  --color-surface: #f4f6fb;
+  --color-surface-brand: var(--brand-mist);
+  --color-fg: #1a1a1a;                 /* 17.4:1 sobre bg; 13.3:1 sobre mist */
+  --color-fg-muted: #454d50;           /* 8.6:1 sobre bg; 6.6:1 sobre mist */
+  --color-border: #8a93a6;             /* 3.1:1 — bordas de campos (1.4.11) */
+
+  --color-primary: var(--brand-navy);  /* 8.4:1 sobre #fff */
+  --color-on-primary: #ffffff;
+  --color-accent: var(--brand-orange); /* CTA: só com texto escuro */
+  --color-on-accent: #1a1a1a;          /* 6.8:1 sobre #F18620 */
+  --color-link: var(--brand-sky-text);
+  --color-header: var(--brand-sky-text); /* faixa ondulada: #00729C para texto branco de qualquer tamanho (5.4:1); #008BBE só daria 3.86:1 */
+
+  --color-success: #1e7a3c;
+  --color-warning: #8a5300;
+  --color-danger: #b3261e;
+  --color-info: var(--brand-navy);
+
+  /* ---- Tipografia ---- */
+  --font-display: "Regave", "Open Sans", system-ui, sans-serif; /* Regave DemiBold: requer arquivo .woff2 licenciado */
+  --font-sans: "Open Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --weight-regular: 400;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  /* escala modular 1.25 */
+  --step--1: 0.8rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.563rem;
+  --step-3: 1.953rem;
+  --step-4: 2.441rem;
+  --step-5: 3.052rem;
+  --leading-tight: 1.2;
+  --leading-body: 1.6;
+  --measure: 68ch;
+
+  /* ---- Espaçamento (base 4px) ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+
+  /* ---- Forma ---- */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-pill: 999px;
+  --shadow-sm: 0 1px 2px rgb(7 75 156 / 0.08);
+  --shadow-md: 0 4px 16px rgb(7 75 156 / 0.12);
+
+  /* ---- Layout ---- */
+  --container: 72rem;
+  --header-height: 4.5rem;
+  --bp-sm: 40em;  /* 640px */
+  --bp-md: 48em;  /* 768px */
+  --bp-lg: 64em;  /* 1024px */
+
+  /* ---- Interação / acessibilidade ---- */
+  --target-min: 1.5rem;     /* 24px — WCAG 2.5.8 */
+  --target-comfort: 2.75rem;/* 44px — ações primárias */
+  --focus-ring: 0 0 0 3px var(--color-bg), 0 0 0 5px var(--color-primary);
+
+  /* ---- Motion ---- */
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  color-scheme: light dark;
+}
+
+/* ---- Tema escuro ---- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg: #0b1a2e;
+    --color-surface: #11243d;
+    --color-surface-brand: #142c4a;
+    --color-fg: #ececec;
+    --color-fg-muted: #b8c2d1;
+    --color-border: #6b7a91;
+    --color-primary: #59c3ec;     /* 8.7:1 sobre #0b1a2e */
+    --color-on-primary: #0b1a2e;
+    --color-accent: #f6a55b;      /* 8.7:1 sobre #0b1a2e */
+    --color-on-accent: #0b1a2e;
+    --color-link: #59c3ec;
+    --color-header: #074b9c;
+    --color-success: #6fd08c;
+    --color-warning: #f2c46b;
+    --color-danger: #ff8a80;
+  }
+}
+:root[data-theme="dark"] {
+  --color-bg: #0b1a2e;
+  --color-surface: #11243d;
+  --color-surface-brand: #142c4a;
+  --color-fg: #ececec;
+  --color-fg-muted: #b8c2d1;
+  --color-border: #6b7a91;
+  --color-primary: #59c3ec;
+  --color-on-primary: #0b1a2e;
+  --color-accent: #f6a55b;
+  --color-on-accent: #0b1a2e;
+  --color-link: #59c3ec;
+  --color-header: #074b9c;
+  --color-success: #6fd08c;
+  --color-warning: #f2c46b;
+  --color-danger: #ff8a80;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid transparent; /* mantém visível em modo de alto contraste */
+  box-shadow: var(--focus-ring);
+}
+
+html { scroll-padding-top: calc(var(--header-height) + var(--space-4)); }
+
+/* ---- Alto contraste (ferramenta de acessibilidade) ---- */
+:root[data-contrast="high"] {
+  --color-bg: #000000;
+  --color-surface: #000000;
+  --color-surface-brand: #000000;
+  --color-fg: #ffffff;
+  --color-fg-muted: #ffffff;
+  --color-border: #ffffff;
+  --color-primary: #ffff00;      /* 19.6:1 sobre #000 */
+  --color-on-primary: #000000;
+  --color-accent: #ffff00;
+  --color-on-accent: #000000;
+  --color-link: #ffff00;
+  --color-header: #000000;
+  --color-success: #00ff7f;
+  --color-warning: #ffd000;
+  --color-danger: #ff6b6b;
+  --shadow-sm: none;
+  --shadow-md: none;
+  --focus-ring: 0 0 0 3px #000, 0 0 0 6px #ffff00;
+}
