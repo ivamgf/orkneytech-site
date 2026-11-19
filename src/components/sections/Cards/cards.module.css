@@ -1,0 +1,105 @@
+.icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: var(--space-4);
+  color: var(--color-primary);
+}
+
+.mark {
+  width: 48px;
+  height: auto;
+  margin-bottom: var(--space-4);
+}
+
+.productRow {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: start;
+  scroll-margin-top: calc(var(--header-height) + var(--space-4));
+}
+
+.productRow img {
+  width: 120px;
+  height: auto;
+  padding: var(--space-3);
+  background: #fff;
+  border-radius: var(--radius-md);
+}
+
+.productRow a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target-min);
+  font-weight: var(--weight-bold);
+}
+
+.stack {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.steps {
+  counter-reset: etapa;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+}
+
+.steps li {
+  counter-increment: etapa;
+  padding: var(--space-6);
+  background: var(--color-bg);
+  border-radius: var(--radius-lg);
+  border-top: 4px solid var(--color-primary);
+}
+
+.steps li::before {
+  content: 'Etapa ' counter(etapa);
+  display: block;
+  margin-bottom: var(--space-2);
+  font-weight: var(--weight-bold);
+  color: var(--color-primary);
+}
+
+.cta {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.cta h2 {
+  color: inherit;
+}
+
+.ctaInner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+}
+
+.ctaInner p {
+  margin: 0;
+}
+
+@media (max-width: 48em) {
+  .productRow {
+    grid-template-columns: 72px minmax(0, 1fr);
+  }
+
+  .productRow img {
+    width: 72px;
+  }
+}
+
+:global(:root[data-contrast='high']) .steps li {
+  border: 2px solid var(--color-fg);
+}
+
+:global(:root[data-contrast='high']) .cta {
+  border-block: 2px solid var(--color-fg);
+}

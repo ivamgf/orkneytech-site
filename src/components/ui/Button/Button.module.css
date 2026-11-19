@@ -1,0 +1,54 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--target-comfort);
+  padding: 0 var(--space-6);
+  border-radius: var(--radius-pill);
+  border: 2px solid transparent;
+  font: var(--weight-bold) var(--step-0) / 1.2 var(--font-sans);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+.button:disabled,
+.button[aria-busy='true'] {
+  cursor: progress;
+  opacity: 0.7;
+  transform: none;
+}
+
+.primary {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.accent {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.ghost {
+  background: transparent;
+  color: var(--color-primary);
+  border-color: currentColor;
+}
+
+/* sobre fundos coloridos (faixa do herói) */
+.onBrand {
+  background: transparent;
+  color: #fff;
+  border-color: #fff;
+}
+
+:global(:root[data-contrast='high']) .onBrand {
+  color: var(--color-link);
+  border-color: var(--color-link);
+}
